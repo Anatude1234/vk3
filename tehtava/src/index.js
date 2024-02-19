@@ -3,12 +3,9 @@ import { View, Text, Alert, SafeAreaView, StyleSheet, ActivityIndicator,
 import React, { useEffect, useState } from "react"
 import * as Location from 'expo-location'
 
-const openWeatherKey = '4721156cd9ac3d556ddfceadb9d0100b'
-//const cityName = 'Oulu'
+const openWeatherKey = ''
 let url = `https://api.openweathermap.org/data/2.5/weather?units=metric&exclude=minutely&appid=${openWeatherKey}`;
-//let url = `https://api.openweathermap.org/data/2.5/weather?q=Oulu&units=metric&exclude=minutely&appid=4721156cd9ac3d556ddfceadb9d0100b&units=metric`;
-//`api.openweathermap.org/data/2.5/weather?q=${citName}&APPID=${openWeatherKey}`
-//`api.openweathermap.org/data/2.5/onecall?&units=metric&exclude=minutely&appid=${openWeatherKey}`;
+
 
 
 
@@ -18,20 +15,20 @@ const [refreshing, setRefreshing] = useState(false);
 
 const loadForecast = async () => {
     setRefreshing(true);
-    // ask permission to access location
+  
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
         Alert.alert('Permission to acces location was denied');
     }
 
-    //get the current location
+  
     let location = await Location.getCurrentPositionAsync({enableHighAccyracy: true});
 
-    //fetches the weather data from the openweathermap api
+  
     const response = await fetch(`${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`);
     console.log('API Response:', response);
 
-    const data = await response.json(); // convert the response to json
+    const data = await response.json(); 
     console.log('Weather Data:', data);
 
     if(!response.ok){
@@ -58,8 +55,7 @@ if(!forecast) {
 
 console.log('Forecast data:', forecast)
 
-// Check if forecast.current and forecast.current.weather are defined
-//const current = forecast.current && forecast.current.weather && forecast.current.weather[0];
+
 const current = forecast && forecast.main && forecast.main.temp;
 if (!current) {
   console.log('Invalid or missing data in the forecast:', forecast);
