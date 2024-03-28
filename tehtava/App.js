@@ -1,19 +1,30 @@
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Position from './components/Position';
+import Weather from './components/Weather';
 
-import { StyleSheet, Text, View } from 'react-native';
-import Weather from './src/index';
+const App = () => {
+  const [position, setPosition] = useState(null);
 
-export default function App() {
+  const handlePositionRetrieved = (coords) => {
+    setPosition(coords);
+  };
+
   return (
     <View style={styles.container}>
-      <Weather />
+      <Position onPositionRetrieved={handlePositionRetrieved} />
+      {position && <Weather locationCoords={position} />}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    backgroundColor: '#111',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
+export default App;
